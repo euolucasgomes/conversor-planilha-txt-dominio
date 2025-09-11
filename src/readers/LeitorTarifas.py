@@ -1,10 +1,11 @@
-import pandas as pd
+from src.readers.BaseLeitor import BaseLeitor
 
-class LeitorTarifas:
-    def __init__(self, modelo_planilha):
-        self.modelo_planilha = modelo_planilha
+
+class LeitorTarifas(BaseLeitor):
 
     def ler_tarifas(self):
-        self.df = pd.read_excel(self.modelo_planilha, sheet_name="Tarifas bancárias")
+        self.df = self.ler("Tarifas bancárias")
 
         print(self.df.head())
+
+        return self.df
