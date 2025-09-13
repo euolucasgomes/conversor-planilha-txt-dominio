@@ -1,7 +1,7 @@
-from src.readers.LeitorTarifas import LeitorTarifas
-from src.readers.LeitorContasPagas import LeitorContasPagas
-from src.readers.LeitorReceitas import LeitorReceitas
-from src.readers.LeitorApropriacoes import LeitorApropriacoes
+from readers.leitor_tarifas import LeitorTarifas
+from readers.leitor_contas_pagas import LeitorContasPagas
+from readers.leitor_receitas import LeitorReceitas
+from readers.leitor_apropriacoes import LeitorApropriacoes
 
 
 def main():

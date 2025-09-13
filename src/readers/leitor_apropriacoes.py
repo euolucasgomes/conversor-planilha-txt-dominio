@@ -1,4 +1,4 @@
-from src.readers.BaseLeitor import BaseLeitor
+from readers.base_leitor import BaseLeitor
 
 
 class LeitorApropriacoes(BaseLeitor):
