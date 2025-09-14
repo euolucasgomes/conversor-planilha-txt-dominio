@@ -1,13 +1,18 @@
-from db.repositorio_parametros import RepositorioParametros
+from src.services.processador_tarifas import ProcessadorTarifas
+
+def main():
+    print("=== Importação de Tarifas Bancárias ===")
+
+    # Passa o caminho da planilha no construtor
+    processador = ProcessadorTarifas("data/input/MODELO DE PLANILHA.xlsx")
+
+    # Processa as tarifas (agora sem precisar passar o path de novo)
+    tarifas_processadas = processador.processar_tarifas()
+
+    print("\n=== Resultado do processamento ===")
+    for tarifa in tarifas_processadas:
+        print(tarifa)
+
 
 if __name__ == "__main__":
-
-    repo = RepositorioParametros()
-
-    conta_tarifa = repo.obter_parametro("conta_tarifa_bancaria")
-    
-    if not conta_tarifa:
-        conta_tarifa = input("Informe a conta contábil de tarifa bancária: ")
-        repo.definir_parametro("conta_tarifa_bancaria", conta_tarifa)
-
-print("Conta tarifa bancária:", conta_tarifa)
+    main()
