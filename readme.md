@@ -1,4 +1,4 @@
-# Conversor de Planilhas para Domínio
+# Conversor de Planilhas Financeiras para o Domínio Sistemas
 
 Projeto backend desenvolvido em **Python** com **MongoDB** para demonstrar boas práticas de programação orientada a objetos, modularização e integração com banco de dados.
 
@@ -6,7 +6,7 @@ Projeto backend desenvolvido em **Python** com **MongoDB** para demonstrar boas 
 
 ## 🚀 Objetivo
 
-O sistema tem como propósito **ler, processar e converter planilhas financeiras** em formatos que possam ser importados para sistemas contábeis.  
+O sistema tem como propósito **ler, processar e converter planilhas financeiras** que um escritório de contabilidade recebe de seus clientes em formatos que possam ser importados para o sistema contábil Domínio Sistemas.  
 
 O foco é no **backend** — ou seja, toda a lógica está por trás, sem interface gráfica. No futuro, nada impede a criação de uma camada de frontend ou API.
 
@@ -48,7 +48,7 @@ flowchart LR
 
 ## 🔧 Tecnologias Utilizadas
 
-- **Linguagem:** Python 3.x  
+- **Linguagem:** Python  
 - **Banco de Dados:** MongoDB (poderia ser substituído por SQLite sem impacto estrutural)  
 - **Bibliotecas:**  
   - `pandas` → manipulação de dados  
@@ -71,8 +71,8 @@ flowchart LR
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/seu-usuario/conversor-planilha.git
-   cd conversor-planilha
+   git clone https://github.com/seu-usuario/conversor-planilha-txt-dominio.git
+   cd conversor-planilha-txt-dominio
 Crie e ative um ambiente virtual:
 
 bash
@@ -135,6 +135,6 @@ Backend Developer | Python | Java | Node.js | MongoDB
 
 📧 lucasgomescomp@hotmail.com
 
-💼 LinkedIn
+💼 [LinkedIn](https://www.linkedin.com/in/euolucasgomes/)
 
-💻 GitHub
+💻 [GitHub](https://github.com/euolucasgomes)
