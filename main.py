@@ -1,25 +1,26 @@
-from readers.leitor_tarifas import LeitorTarifas
-from readers.leitor_contas_pagas import LeitorContasPagas
-from readers.leitor_receitas import LeitorReceitas
-from readers.leitor_apropriacoes import LeitorApropriacoes
+from src.services.processador_tarifas import ProcessadorTarifas
+from src.writers.lancamentos_contabeis_tarifas import LancamentosContabeisTarifas
 
 
 def main():
-    input_file = "data/input/MODELO DE PLANILHA.xlsx"
+    print("=== Importação de Tarifas Bancárias ===")
 
-    leitor_tarifas = LeitorTarifas(input_file)
-    tarifas_df = leitor_tarifas.ler_tarifas()
+    # Passa o caminho da planilha no construtor
+    processador = ProcessadorTarifas("data/input/MODELO DE PLANILHA.xlsx")
 
-    leitor_contas = LeitorContasPagas(input_file)
-    contas_df = leitor_contas.ler_contas_pagas()
+    # Processa as tarifas (agora sem precisar passar o path de novo)
+    tarifas_processadas = processador.processar_tarifas()
 
-    leitor_receitas = LeitorReceitas(input_file)
-    receitas_df = leitor_receitas.ler_receitas()
+    print("\n=== Resultado do processamento ===")
+    for tarifa in tarifas_processadas:
+        print(tarifa)
 
-    ler_apropriacoes = LeitorApropriacoes(input_file)
-    apropriacoes_df = ler_apropriacoes.ler_apropriacoes()
+    print("\n=== Gerando arquivo de lançamentos contábeis ===")
 
-    return tarifas_df, contas_df, receitas_df, apropriacoes_df
+    escritor = LancamentosContabeisTarifas()
+    escritor.salvar_txt(tarifas_processadas,
+                        "data/output/lancamentos_contabeis_tarifas.txt")
+    print("\nArquivo 'lancamentos_contabeis_tarifas.txt' gerado com sucesso.")
 
 
 if __name__ == "__main__":
