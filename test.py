@@ -1,7 +1,9 @@
 from src.services.processador_tarifas import ProcessadorTarifas
 from src.services.processador_receitas import ProcessadorReceitas
+from src.services.processador_apropriacoes import ProcessadorApropriacoes
 from src.writers.lancamentos_contabeis_tarifas import LancamentosContabeisTarifas
 from src.writers.lancamentos_contabeis_receitas import LancamentosContabeisReceitas
+from src.writers.lancamentos_contabeis_apropriacoes import LancamentosContabeisApropriacoes
 from src.menus.menu_contas_bancarias import MenuContasBancarias
 
 
@@ -48,6 +50,27 @@ def importar_receitas():
 
     print("\nArquivo 'lancamentos_contabeis_receitas.txt' gerado com sucesso.")
 
+# === APROPRIAÇÕES ===
+def importar_apropriacoes():
+    print("\n=== Importação de Apropriações ===")
+
+    processador = ProcessadorApropriacoes("data/input/MODELO DE PLANILHA.xlsx")
+    apropriacoes_processadas = processador.processar_apropriacoes()
+
+    print("\n=== Resultado do processamento ===")
+    for apropriacao in apropriacoes_processadas:
+        print(apropriacao)
+
+    print("\n=== Gerando arquivo de lançamentos contábeis ===")
+
+    escritor = LancamentosContabeisApropriacoes()
+    escritor.salvar_txt(
+        apropriacoes_processadas,
+        "data/output/lancamentos_contabeis_apropriacoes.txt"
+    )
+
+    print("\nArquivo 'lancamentos_contabeis_apropriacoes.txt' gerado com sucesso.")
+
 
 # === MENU PRINCIPAL ===
 def main():
@@ -55,8 +78,9 @@ def main():
         print("\n=== SISTEMA DE CONVERSÃO CONTÁBIL ===")
         print("1. Importar Tarifas Bancárias")
         print("2. Importar Receitas")
-        print("3. Gerenciar Contas Bancárias")
-        print("4. Sair")
+        print("3. Importar Apropriações")
+        print("4. Gerenciar Contas Bancárias")
+        print("5. Sair")
 
         opcao = input("Escolha uma opção: ")
 
@@ -65,9 +89,11 @@ def main():
         elif opcao == '2':
             importar_receitas()
         elif opcao == '3':
+            importar_apropriacoes()
+        elif opcao == '4':
             menu = MenuContasBancarias()
             menu.exibir_menu()
-        elif opcao == '4':
+        elif opcao == '5':
             print("Saindo do sistema...")
             break
         else:
