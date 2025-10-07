@@ -92,9 +92,11 @@ flowchart LR
  - Exportação do txt (formato importável no Domínio Sistemas) de lançamentos contábeis de apropriações
 
 📚 Próximos Passos
-Implementação de conversão da aba Contas Pagas
+
+- Implementação de conversão da aba Contas Pagas
 
 👨‍💻 Autor
+
 Lucas Gomes de Oliveira
 Backend Developer | Python | Java | Node.js | MongoDB
 
