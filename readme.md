@@ -80,16 +80,16 @@ flowchart LR
 📌 Status do Projeto
  Estrutura inicial do backend
 
- Leitura da aba de tarifas bancárias da planilha modelo
- Leitura da aba de receitas da planilha modelo
- Leitura da aba de apropriações da planilha modelo
- Processamento das tarifas bancárias
- Processamento das receitas
- Processamento das apropriações
+ - Leitura da aba de tarifas bancárias da planilha modelo
+ - Leitura da aba de receitas da planilha modelo
+ - Leitura da aba de apropriações da planilha modelo
+ - Processamento das tarifas bancárias
+ - Processamento das receitas
+ - Processamento das apropriações
 
- Exportação do txt (formato importável no Domínio Sistemas) de lançamentos contábeis de tarifas bancárias
- Exportação do txt (formato importável no Domínio Sistemas) de lançamentos contábeis de receitas
- Exportação do txt (formato importável no Domínio Sistemas) de lançamentos contábeis de apropriações
+ - Exportação do txt (formato importável no Domínio Sistemas) de lançamentos contábeis de tarifas bancárias
+ - Exportação do txt (formato importável no Domínio Sistemas) de lançamentos contábeis de receitas
+ - Exportação do txt (formato importável no Domínio Sistemas) de lançamentos contábeis de apropriações
 
 📚 Próximos Passos
 Implementação de conversão da aba Contas Pagas
