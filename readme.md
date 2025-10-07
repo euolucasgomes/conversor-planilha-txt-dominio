@@ -21,10 +21,12 @@ A estrutura do projeto foi pensada para ser **modular, escalável e fácil de ma
   - `output/`: arquivos processados pelo sistema  
 
 - **src/**
-  - **db/** → conexão com banco de dados e repositórios  
+  - **db/** → conexão com banco de dados e repositórios
+  - **menus/** → organização do menu do sistema em que o usuário vai interagir  
   - **models/** → modelos de dados (entidades)  
   - **readers/** → leitura de planilhas (tarifas, receitas, contas pagas etc.)  
-  - **services/** → regras de negócio e processamento dos dados  
+  - **services/** → regras de negócio e processamento dos dados
+  - **writers/** → escrita dos arquivos em txt no formato em que o Domínio Sistemas importa 
 
 - **main.py** → ponto de integração principal com o usuário  
 - **test.py** → ambiente de testes para validar novas funcionalidades sem impactar o main  
@@ -53,7 +55,8 @@ flowchart LR
 - **Bibliotecas:**  
   - `pandas` → manipulação de dados  
   - `openpyxl` → leitura de arquivos Excel  
-  - `pymongo` → integração com MongoDB  
+  - `pymongo` → integração com MongoDB
+  - `datetime` → parametrização da data  
 
 ---
 
@@ -71,61 +74,25 @@ flowchart LR
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/seu-usuario/conversor-planilha-txt-dominio.git
+   git clone https://github.com/euolucasgomes/conversor-planilha-txt-dominio.git
    cd conversor-planilha-txt-dominio
-Crie e ative um ambiente virtual:
-
-bash
-Copiar código
-python -m venv venv
-source venv/bin/activate   # Linux/Mac
-venv\Scripts\activate      # Windows
-Instale as dependências:
-
-bash
-Copiar código
-pip install -r requirements.txt
-Configure a conexão com o banco no arquivo:
-
-bash
-Copiar código
-src/db/conexao.py
-Coloque as planilhas em data/input/ e rode o sistema:
-
-bash
-Copiar código
-python main.py
-Para testes isolados:
-
-bash
-Copiar código
-python test.py
-📊 Exemplo de Uso
-Entrada: planilha com tarifas bancárias
-
-Processamento: leitura → validação → armazenamento no MongoDB
-
-Saída: arquivo convertido em data/output/ pronto para importação no sistema contábil
 
 📌 Status do Projeto
  Estrutura inicial do backend
 
- Leitura de planilhas de tarifas bancárias
+ Leitura da aba de tarifas bancárias da planilha modelo
+ Leitura da aba de receitas da planilha modelo
+ Leitura da aba de apropriações da planilha modelo
+ Processamento das tarifas bancárias
+ Processamento das receitas
+ Processamento das apropriações
 
- Leitura e processamento de receitas
-
- Exportação completa para sistemas contábeis
-
- Documentação de API (se houver evolução futura)
+ Exportação do txt (formato importável no Domínio Sistemas) de lançamentos contábeis de tarifas bancárias
+ Exportação do txt (formato importável no Domínio Sistemas) de lançamentos contábeis de receitas
+ Exportação do txt (formato importável no Domínio Sistemas) de lançamentos contábeis de apropriações
 
 📚 Próximos Passos
-Expandir suporte a diferentes tipos de planilhas
-
-Criar testes automatizados unitários/integrados
-
-Implementar logs estruturados
-
-Possível integração com frontend ou API REST
+Implementação de conversão da aba Contas Pagas
 
 👨‍💻 Autor
 Lucas Gomes de Oliveira
