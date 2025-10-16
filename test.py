@@ -5,6 +5,9 @@ from src.writers.lancamentos_contabeis_tarifas import LancamentosContabeisTarifa
 from src.writers.lancamentos_contabeis_receitas import LancamentosContabeisReceitas
 from src.writers.lancamentos_contabeis_apropriacoes import LancamentosContabeisApropriacoes
 from src.menus.menu_contas_bancarias import MenuContasBancarias
+from src.services.processador_contas_pagas import ProcessadorContasPagas
+from src.writers.lancamentos_contabeis_contas_pagas import LancamentosContabeisContasPagas
+
 
 
 # === TARIFAS ===
@@ -71,6 +74,30 @@ def importar_apropriacoes():
 
     print("\nArquivo 'lancamentos_contabeis_apropriacoes.txt' gerado com sucesso.")
 
+# === CONTAS A PAGAR ===
+def importar_contas_pagas():
+    print("\n=== Importação de Contas a Pagar ===")
+
+    processador = ProcessadorContasPagas("data/input/MODELO DE PLANILHA.xlsx")
+    lancamentos, resumo = processador.processar_contas_pagas()
+
+    print("\n=== Resumo do processamento ===")
+    print(f"Auto (memória): {resumo.get('auto_memoria', 0)}")
+    print(f"Sugestão/Manual: {resumo.get('via_sugestao_ou_manual', 0)}")
+    print(f"Erros: {resumo.get('erros', 0)}")
+
+    print("\n=== Amostra de lançamentos (máx. 5) ===")
+    for l in lancamentos[:5]:
+        print(l)
+
+    print("\n=== Gerando arquivo de lançamentos contábeis ===")
+    escritor = LancamentosContabeisContasPagas()
+    escritor.salvar_txt(
+        lancamentos,
+        "data/output/lancamentos_contabeis_contas_pagas.txt",  # nome do arquivo para Contas a Pagar
+        modo="w"  # use "a" se quiser appendar
+    )
+    print("\nArquivo 'lancamentos_contabeis_contas_pagas.txt' gerado com sucesso.")
 
 # === MENU PRINCIPAL ===
 def main():
@@ -79,8 +106,9 @@ def main():
         print("1. Importar Tarifas Bancárias")
         print("2. Importar Receitas")
         print("3. Importar Apropriações")
-        print("4. Gerenciar Contas Bancárias")
-        print("5. Sair")
+        print("4. Importar Contas a Pagar")         # <— NOVO
+        print("5. Gerenciar Contas Bancárias")
+        print("6. Sair")
 
         opcao = input("Escolha uma opção: ")
 
@@ -91,13 +119,16 @@ def main():
         elif opcao == '3':
             importar_apropriacoes()
         elif opcao == '4':
+            importar_contas_pagas()                 # <— NOVO
+        elif opcao == '5':
             menu = MenuContasBancarias()
             menu.exibir_menu()
-        elif opcao == '5':
+        elif opcao == '6':
             print("Saindo do sistema...")
             break
         else:
             print("Opção inválida. Tente novamente.")
+
 
 
 if __name__ == "__main__":

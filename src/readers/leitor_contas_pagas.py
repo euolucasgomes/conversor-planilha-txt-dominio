@@ -1,4 +1,4 @@
-from readers.base_leitor import BaseLeitor
+from src.readers.base_leitor import BaseLeitor
 
 
 class LeitorContasPagas(BaseLeitor):

@@ -129,52 +129,40 @@ class RepositorioContasPagas:
         if not isinstance(valor, dict):
             raise ValueError("valor deve ser um dict")
 
-        # Verifica existência pra exigir 'conta_despesa' apenas em INSERT
-        existente = self.collection.find_one({"assinatura": chave})
-        if not existente:
-            conta = valor.get('conta_despesa')
-            if not conta or not isinstance(conta, str):
-                raise ValueError(
-                    "para criar, 'conta_despesa' é obrigatório e deve ser string")
-
         allowed = {"conta_despesa", "fornecedor_norm", "tokens", "origem"}
         set_doc = {k: v for k, v in valor.items() if k in allowed}
 
-        # Normalização opcional dos tokens (lista de strings, sem vazios, uppercase, únicos)
+        # tokens normalizados
         if "tokens" in set_doc and set_doc["tokens"] is not None:
             if not isinstance(set_doc["tokens"], list):
-                raise ValueError("tokens devem ser uma lista de strings")
+                raise ValueError("tokens deve ser uma lista de strings")
             norm_tokens = []
             for t in set_doc["tokens"]:
                 s = str(t).strip().upper()
                 if s:
                     norm_tokens.append(s)
-            # mantém ordem e remove duplicatas
             set_doc["tokens"] = list(dict.fromkeys(norm_tokens))
+
+        # default de origem (caso não venha)
+        if "origem" not in set_doc:
+            set_doc["origem"] = "manual"
+
+        # se for INSERT, conta_despesa é obrigatória
+        existente = self.collection.find_one({"assinatura": chave})
+        if not existente and ("conta_despesa" not in set_doc or not isinstance(set_doc["conta_despesa"], str)):
+            raise ValueError("para criar, 'conta_despesa' é obrigatório e deve ser string")
 
         set_doc["updated_at"] = datetime.utcnow()
 
         set_on_insert = {
             "assinatura": chave,
             "created_at": datetime.utcnow(),
-            "stats": {'aplicacoes': 0},
-            # origem default só no insert (pode vir em set_doc para update)
-            "origem": valor.get('origem', 'manual'),
+            "stats": {"aplicacoes": 0},
         }
-        # Em insert, gravar também conta_despesa (já validada acima)
-        if not existente and "conta_despesa" in valor:
-            set_on_insert["conta_despesa"] = valor["conta_despesa"]
-        # Opcionalmente povoar fornecedor_norm/tokens no insert, se fornecidos
-        if "fornecedor_norm" in valor and valor["fornecedor_norm"]:
-            set_on_insert["fornecedor_norm"] = str(
-                valor["fornecedor_norm"]).strip().upper()
-        if "tokens" in set_doc and not existente:
-            set_on_insert["tokens"] = set_doc["tokens"]
 
         update_ops = {"$set": set_doc, "$setOnInsert": set_on_insert}
         if incrementar_aplicacoes > 0:
-            update_ops["$inc"] = {
-                "stats.aplicacoes": int(incrementar_aplicacoes)}
+            update_ops["$inc"] = {"stats.aplicacoes": int(incrementar_aplicacoes)}
 
         doc = self.collection.find_one_and_update(
             {"assinatura": chave},
